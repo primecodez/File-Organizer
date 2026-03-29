@@ -24,6 +24,14 @@ def create_folder_if_not_exists(folder_name):
         os.makedirs(folder_name)
         print(f"Created folder: {folder_name}")
 
+def get_file_size_readable(size_bytes):
+    """Convert bytes to readable format"""
+    for unit in ['B', 'KB', 'MB', 'GB']:
+        if size_bytes < 1024:
+            return f"{size_bytes:.2f} {unit}"
+        size_bytes /= 1024
+    return f"{size_bytes:.2f} TB"
+
 
 def move_file(file, destination):
     import shutil
@@ -47,6 +55,13 @@ def move_file(file, destination):
         print(f"Moved {file} to {dest_path}")
     except Exception as e:
         print(f"Error moving {file}: {e}")
+        
+def organize(file):
+    folder = get_file_type(file)
+    create_folder_if_not_exists(folder)
+    move_file(file, folder)
+
+organize("example.pdf")
 
 
 if __name__ == "__main__":
